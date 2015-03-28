@@ -13,7 +13,14 @@ def main(arg = sys.argv):
     #adding arguments
     parser.add_argument("path", help="Give the path name to rename files",
             type=str, nargs='+')
-    parser.add_argument("-p", "--pattern", help="Give the pattern that is to be removed", type=str)
+    parser.add_argument("-p", "--pattern", help="Give the pattern that is to "
+                "be removed", type=str)
+    parser.add_argument("-pb", "--patternAtBeg", help="Pattern to be removed "
+                "is matched at beginning of the filenames", type=str)
+    parser.add_argument("-pe", "--patternAtEnd", help="Pattern to be removed "
+                "is matched at end of the filenames(extension should be "
+                "included in pattern)", type=str)
+
 
     #parsing arguments
     argu = parser.parse_args()
@@ -71,16 +78,6 @@ def parseDir(fname, argu):
                else:
                    #pattern = r'^[\[+ \]+ \d+ _+\s+ -+]+'#^\d+]+'
                    renameFile(name, dirPath)
-
-
-
-
-
-
-
-
-
-
 
    else:
         print('Path is not valid')
