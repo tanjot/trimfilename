@@ -72,9 +72,13 @@ def parseDir(fname, argu):
 
            for name in files:
                if argu.pattern:
-                   print('Found a pattern: '+pattern)
+                   print('Find pattern: '+pattern)
                    pattern = argu.pattern
                    match = re.search(pattern+'\w+', name)
+               elif argu.patternAtBeg:
+                   print('Find pattern: '+ pattern +' at beginning')
+               elif argu.patternAtEnd:
+                   print('Find pattern: '+ pattern +' at end')
                else:
                    #pattern = r'^[\[+ \]+ \d+ _+\s+ -+]+'#^\d+]+'
                    renameFile(name, dirPath)
@@ -92,14 +96,6 @@ def parseDir(fname, argu):
    for name in dirs:
        fold = os.path.join(dirPath, name)
        print('Folder: '+fold)
-
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     main()
