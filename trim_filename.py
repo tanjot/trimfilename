@@ -30,12 +30,31 @@ def main(arg = sys.argv):
         print(f)
         parseDir(f,argu)
 
-def renameFile(name, dirPath):
+#renames file if name has changed
+def renameFile(oldname, li, dirPath):
+    print()
+    pathNname = os.path.join(dirPath, oldname)
+
+    newname = ''
+    #Does not rename file if it begins with '.' or the whole file name gets
+    #deleted after rename and also if there is no change in filename
+    if li and li[0] != '.' and oldname != ''.join(li):
+        newname = ''.join(li)
+        os.rename(pathNname, os.path.join(dirPath, newname))
+        print('Successfully renamed '+pathNname+' to'
+               ' '+ newname)
+
+        renamed.append(pathNname + ' to ' + newname)
+
+    else:
+        print('Not renaming, filename : '+pathNname)
+
+def removeDefaultPattern(name, dirPath):
     #storing name in a list for manipulations on characters
     #individually
 
-    pathNname = os.path.join(dirPath, name)
-    print('Processing file: '+pathNname)
+
+    #print('Processing file: '+pathNname)
     li = list(name)
 
     global renamed
@@ -49,19 +68,19 @@ def renameFile(name, dirPath):
             else:
                 break
 
-        newname = ''
-        #Does not rename file if it begins with '.' or the whole file name gets
-        #deleted after rename and also if there is no change in filename
-        if li and li[0] != '.' and name != ''.join(li):
-            newname = ''.join(li)
-            os.rename(os.path.join(dirPath, name), pathNname)
-            print('Successfully renamed '+pathNname+' to'
-                   ' '+os.path.join(dirPath, newname))
+        renameFile(name, li, dirPath)
 
-            renamed.append(pathNname + ' to ' + newname)
 
-        else:
-            print('Not renaming, filename : '+pathNname)
+
+
+
+
+
+
+
+
+
+
 
 #define function parseDir
 def parseDir(fname, argu):
@@ -81,7 +100,7 @@ def parseDir(fname, argu):
                    print('Find pattern: '+ pattern +' at end')
                else:
                    #pattern = r'^[\[+ \]+ \d+ _+\s+ -+]+'#^\d+]+'
-                   renameFile(name, dirPath)
+                   removeDefaultPattern(name, dirPath)
 
    else:
         print('Path is not valid')
