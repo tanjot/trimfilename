@@ -44,6 +44,7 @@ def renameFile(oldname, li, dirPath):
         print('Successfully renamed '+pathNname+' to'
                ' '+ newname)
 
+        #adding filename to common list of renamed files
         renamed.append(pathNname + ' to ' + newname)
 
     else:
@@ -57,8 +58,6 @@ def removeDefaultPattern(name, dirPath):
     #print('Processing file: '+pathNname)
     li = list(name)
 
-    global renamed
-
     #To not rename files starting with only '.'
     if li[0] != '.':
         for char in name:
@@ -70,17 +69,30 @@ def removeDefaultPattern(name, dirPath):
 
         renameFile(name, li, dirPath)
 
+#removes the pattern matched at beginning of the filename
+def removePatternAtBeg(name, dirPath):
+    li = list(name)
+    patternLi = list(pattern)
+    global renamed
 
+    #will not rename extension or hidden files
+    if li[0] != '.':
 
+        newname = name[len(pattern):]
 
+        #will not rename if the whole filename is deleted or starts with a
+        #after rename
+        if newname and newname[0] != '.' and name != newname:
+            oldPathName = os.path.join(dirPath, name)
 
+            print('Successfully renamed '+oldPathName+' to'
+                   ' '+ newname)
 
+            os.rename(oldPathName, os.path.join(dirPath,
+                newname))
 
-
-
-
-
-
+            #adding filename to common list of renamed files
+            renamed.append(oldPathName + ' to ' + newname)
 
 #define function parseDir
 def parseDir(fname, argu):
@@ -90,12 +102,20 @@ def parseDir(fname, argu):
        for dirPath, dirs, files in os.walk(fname):
 
            for name in files:
+               global pattern
                if argu.pattern:
-                   print('Find pattern: '+pattern)
+                   print('Find pattern: ' + pattern)
                    pattern = argu.pattern
                    match = re.search(pattern+'\w+', name)
                elif argu.patternAtBeg:
-                   print('Find pattern: '+ pattern +' at beginning')
+                   #print('Find pattern: '+ argu.patternAtBeg +' at beginning')
+
+                   match = re.search('^' + argu.patternAtBeg  , name)
+                   if match :
+                       print('PATT AT BEG: '+ match.group() +' filename: '+name);
+                       pattern = argu.patternAtBeg
+                       removePatternAtBeg(name, dirPath)
+
                elif argu.patternAtEnd:
                    print('Find pattern: '+ pattern +' at end')
                else:
