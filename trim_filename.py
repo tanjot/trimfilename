@@ -3,7 +3,6 @@ import sys
 import os
 import re
 import argparse
-pattern = ''#= r'^[\[+ \]+ \d+ _+ .+ \s+ -+]+'
 renamed =[]
 
 #define function main
@@ -25,7 +24,6 @@ def main(arg = sys.argv):
     #parsing arguments
     argu = parser.parse_args()
 
-    global pattern
     for name in argu.path:
         print(name)
         parseDir(name,argu)
@@ -67,16 +65,16 @@ def removeDefaultPattern(name, dirPath):
 
         renameFile(name, nameList, dirPath)
 
-def removePatternAtBeg(name, dirPath):
+def removePatternAtBeg(name, dirPath, patternToBeRemoved):
     ''' Removes the pattern matched at beginning of the filename
     '''
-    patternLi = list(pattern)
+    patternLi = list(patternToBeRemoved)
     global renamed
 
     #will not rename extension or hidden files
     if name[0] != '.':
 
-        newname = name[len(pattern):]
+        newname = name[len(patternToBeRemoved):]
 
         #will not rename if the whole filename is deleted or starts with a
         #after rename
@@ -99,22 +97,22 @@ def parseDir(fname, argu):
        for dirPath, dirs, files in os.walk(fname):
 
            for name in files:
-               global pattern
                if argu.pattern:
-                   print('Find pattern: ' + pattern)
-                   pattern = argu.pattern
-                   match = re.search(pattern+'\w+', name)
+                   patternToBeRemoved = argu.pattern
+                   print('Find pattern: ' + patternToBeRemoved)
+                   match = re.search(patternToBeRemoved+'\w+', name)
                elif argu.patternAtBeg:
                    #print('Find pattern: '+ argu.patternAtBeg +' at beginning')
 
-                   match = re.search('^' + argu.patternAtBeg  , name)
+                   patternToBeRemoved = argu.patternAtBeg
+                   match = re.search('^' + patternToBeRemoved, name)
                    if match :
                        print('PATT AT BEG: '+ match.group() +' filename: '+name);
-                       pattern = argu.patternAtBeg
-                       removePatternAtBeg(name, dirPath)
+                       removePatternAtBeg(name, dirPath, patternToBeRemoved)
 
                elif argu.patternAtEnd:
-                   print('Find pattern: '+ pattern +' at end')
+                   patternToBeRemoved = argu.patternAtEnd
+                   print('Find pattern: '+ patternToBeRemoved +' at end')
                else:
                    #pattern = r'^[\[+ \]+ \d+ _+\s+ -+]+'#^\d+]+'
                    removeDefaultPattern(name, dirPath)
