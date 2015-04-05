@@ -26,21 +26,20 @@ def main(arg = sys.argv):
     argu = parser.parse_args()
 
     global pattern
-    for f in argu.path:
-        print(f)
-        parseDir(f,argu)
+    for name in argu.path:
+        print(name)
+        parseDir(name,argu)
 
-def renameFile(oldname, li, dirPath):
+def renameFile(oldname, renamedList, dirPath):
     ''' Renames file if name has changed
     '''
-    print()
     pathNname = os.path.join(dirPath, oldname)
 
     newname = ''
     #Does not rename file if it begins with '.' or the whole file name gets
     #deleted after rename and also if there is no change in filename
-    if li and li[0] != '.' and oldname != ''.join(li):
-        newname = ''.join(li)
+    if renamedList and renamedList[0] != '.' and oldname != ''.join(renamedList):
+        newname = ''.join(renamedList)
         os.rename(pathNname, os.path.join(dirPath, newname))
         print('Successfully renamed '+pathNname+' to'
                ' '+ newname)
@@ -94,7 +93,6 @@ def removePatternAtBeg(name, dirPath):
             #adding filename to common list of renamed files
             renamed.append(oldPathName + ' to ' + newname)
 
-#define function parseDir
 def parseDir(fname, argu):
    print('Entered parseDirfname'+fname)
 
