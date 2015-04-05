@@ -54,28 +54,27 @@ def removeDefaultPattern(name, dirPath):
     ''' storing name in a list for manipulations on characters individually
     '''
     #print('Processing file: '+pathNname)
-    li = list(name)
+    nameList = list(name)
 
     #To not rename files starting with only '.'
-    if li[0] != '.':
+    if nameList[0] != '.':
         for char in name:
             #remove all non alphabet characters from filename
             if not(char.isalpha() or char == '.'):
-                del(li[li.index(char)])
+                del(nameList[nameList.index(char)])
             else:
                 break
 
-        renameFile(name, li, dirPath)
+        renameFile(name, nameList, dirPath)
 
 def removePatternAtBeg(name, dirPath):
     ''' Removes the pattern matched at beginning of the filename
     '''
-    li = list(name)
     patternLi = list(pattern)
     global renamed
 
     #will not rename extension or hidden files
-    if li[0] != '.':
+    if name[0] != '.':
 
         newname = name[len(pattern):]
 
