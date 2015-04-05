@@ -30,8 +30,9 @@ def main(arg = sys.argv):
         print(f)
         parseDir(f,argu)
 
-#renames file if name has changed
 def renameFile(oldname, li, dirPath):
+    ''' Renames file if name has changed
+    '''
     print()
     pathNname = os.path.join(dirPath, oldname)
 
@@ -51,10 +52,8 @@ def renameFile(oldname, li, dirPath):
         print('Not renaming, filename : '+pathNname)
 
 def removeDefaultPattern(name, dirPath):
-    #storing name in a list for manipulations on characters
-    #individually
-
-
+    ''' storing name in a list for manipulations on characters individually
+    '''
     #print('Processing file: '+pathNname)
     li = list(name)
 
@@ -69,8 +68,9 @@ def removeDefaultPattern(name, dirPath):
 
         renameFile(name, li, dirPath)
 
-#removes the pattern matched at beginning of the filename
 def removePatternAtBeg(name, dirPath):
+    ''' Removes the pattern matched at beginning of the filename
+    '''
     li = list(name)
     patternLi = list(pattern)
     global renamed
