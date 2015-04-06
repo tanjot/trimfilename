@@ -3,7 +3,7 @@ import sys
 import os
 import re
 import argparse
-renamed =[]
+#renamed =[]
 
 #define function main
 def main(arg = sys.argv):
@@ -12,7 +12,7 @@ def main(arg = sys.argv):
     #adding arguments
     parser.add_argument("path", help="Give the path name to rename files",
             type=str, nargs='+')
-    parser.add_argument("-p", "--pattern", help="Give the pattern that is to "
+    parser.add_argument("-p", "--patternInString", help="Give the pattern that is to "
                 "be removed", type=str)
     parser.add_argument("-pb", "--patternAtBeg", help="Pattern to be removed "
                 "is matched at beginning of the filenames", type=str)
@@ -28,7 +28,7 @@ def main(arg = sys.argv):
         print(name)
         parseDir(name,argu)
 
-def renameFile(oldname, renamedList, dirPath):
+def renameFile(oldname, nameList, dirPath, renamedList):
     ''' Renames file if name has changed
     '''
     pathNname = os.path.join(dirPath, oldname)
@@ -36,19 +36,19 @@ def renameFile(oldname, renamedList, dirPath):
     newname = ''
     #Does not rename file if it begins with '.' or the whole file name gets
     #deleted after rename and also if there is no change in filename
-    if renamedList and renamedList[0] != '.' and oldname != ''.join(renamedList):
-        newname = ''.join(renamedList)
+    if nameList and nameList[0] != '.' and oldname != ''.join(nameList):
+        newname = ''.join(nameList)
         os.rename(pathNname, os.path.join(dirPath, newname))
         print('Successfully renamed '+pathNname+' to'
                ' '+ newname)
 
         #adding filename to common list of renamed files
-        renamed.append(pathNname + ' to ' + newname)
+        renamedList.append(pathNname + ' to ' + newname)
 
     else:
         print('Not renaming, filename : '+pathNname)
 
-def removeDefaultPattern(name, dirPath):
+def removeDefaultPattern(name, dirPath, renamedList):
     ''' storing name in a list for manipulations on characters individually
     '''
     #print('Processing file: '+pathNname)
@@ -63,13 +63,12 @@ def removeDefaultPattern(name, dirPath):
             else:
                 break
 
-        renameFile(name, nameList, dirPath)
+        renameFile(name, nameList, dirPath, renamedList)
 
-def removePatternAtBeg(name, dirPath, patternToBeRemoved):
+def removePatternAtBeg(name, dirPath, patternToBeRemoved, renamedList):
     ''' Removes the pattern matched at beginning of the filename
     '''
     patternLi = list(patternToBeRemoved)
-    global renamed
 
     #will not rename extension or hidden files
     if name[0] != '.':
@@ -88,44 +87,46 @@ def removePatternAtBeg(name, dirPath, patternToBeRemoved):
                 newname))
 
             #adding filename to common list of renamed files
-            renamed.append(oldPathName + ' to ' + newname)
+            renamedList.append(oldPathName + ' to ' + newname)
 
 def parseDir(fname, argu):
    print('Entered parseDirfname'+fname)
 
+   renamedList = []
    if os.path.exists(fname):
        for dirPath, dirs, files in os.walk(fname):
 
            for name in files:
-               if argu.pattern:
-                   patternToBeRemoved = argu.pattern
+               if argu.patternInString:
+                   patternToBeRemoved = argu.patternInString
                    print('Find pattern: ' + patternToBeRemoved)
                    match = re.search(patternToBeRemoved+'\w+', name)
+                   #removePatternInString()
                elif argu.patternAtBeg:
                    #print('Find pattern: '+ argu.patternAtBeg +' at beginning')
 
                    patternToBeRemoved = argu.patternAtBeg
                    match = re.search('^' + patternToBeRemoved, name)
-                   if match :
+                   if match:
                        print('PATT AT BEG: '+ match.group() +' filename: '+name);
-                       removePatternAtBeg(name, dirPath, patternToBeRemoved)
+                       removePatternAtBeg(name, dirPath, patternToBeRemoved,
+                               renamedList)
 
                elif argu.patternAtEnd:
                    patternToBeRemoved = argu.patternAtEnd
                    print('Find pattern: '+ patternToBeRemoved +' at end')
                else:
                    #pattern = r'^[\[+ \]+ \d+ _+\s+ -+]+'#^\d+]+'
-                   removeDefaultPattern(name, dirPath)
+                   removeDefaultPattern(name, dirPath, renamedList)
 
    else:
         print('Path is not valid')
 
-   global renamed
-   if renamed:
+   if renamedList:
        print('Files renamed: ')
-       for f in renamed:
-           print(f)
-       print('Successfully rename '+str(len(renamed))+' file/s')
+       for name in renamedList:
+           print(name)
+       print('Successfully rename '+str(len(renamedList))+' file/s')
 
    for name in dirs:
        fold = os.path.join(dirPath, name)
