@@ -74,19 +74,7 @@ def removePatternAtBeg(name, dirPath, patternToBeRemoved, renamedList):
 
         newname = name[len(patternToBeRemoved):]
 
-        #will not rename if the whole filename is deleted or starts with a
-        #after rename
-        if newname and newname[0] != '.' and name != newname:
-            oldPathName = os.path.join(dirPath, name)
-
-            print('Successfully renamed '+oldPathName+' to'
-                   ' '+ newname)
-
-            os.rename(oldPathName, os.path.join(dirPath,
-                newname))
-
-            #adding filename to common list of renamed files
-            renamedList.append(oldPathName + ' to ' + newname)
+        renameFile(name, newname, dirPath, renamedList)
 
 def parseDir(fname, argu):
    print('Entered parseDirfname'+fname)
