@@ -76,6 +76,12 @@ def removePatternAtBeg(name, dirPath, patternToBeRemoved, renamedList):
 
         renameFile(name, newname, dirPath, renamedList)
 
+def removePatternInString(name, dirPath, patternToBeRemoved, renamedList):
+    ''' Checks for pattern in whole string and removes it if match is found
+    '''
+    newname = re.sub( patternToBeRemoved, '', name )
+    renameFile(name, newname, dirPath, renamedList)
+
 def parseDir(fname, argu):
    print('Entered parseDirfname'+fname)
 
@@ -86,9 +92,10 @@ def parseDir(fname, argu):
            for name in files:
                if argu.patternInString:
                    patternToBeRemoved = argu.patternInString
-                   print('Find pattern: ' + patternToBeRemoved)
+                   #print('Find pattern: ' + patternToBeRemoved)
                    match = re.search(patternToBeRemoved+'\w+', name)
-                   #removePatternInString()
+                   removePatternInString(name, dirPath, patternToBeRemoved,
+                           renamedList)
                elif argu.patternAtBeg:
                    #print('Find pattern: '+ argu.patternAtBeg +' at beginning')
 
