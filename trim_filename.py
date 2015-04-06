@@ -28,16 +28,15 @@ def main(arg = sys.argv):
         print(name)
         parseDir(name,argu)
 
-def renameFile(oldname, nameList, dirPath, renamedList):
+def renameFile(oldname, newname, dirPath, renamedList):
     ''' Renames file if name has changed
     '''
     pathNname = os.path.join(dirPath, oldname)
 
-    newname = ''
     #Does not rename file if it begins with '.' or the whole file name gets
     #deleted after rename and also if there is no change in filename
-    if nameList and nameList[0] != '.' and oldname != ''.join(nameList):
-        newname = ''.join(nameList)
+    if newname and newname[0] != '.' and oldname != newname:
+        #newname = ''.join(newname)
         os.rename(pathNname, os.path.join(dirPath, newname))
         print('Successfully renamed '+pathNname+' to'
                ' '+ newname)
@@ -63,7 +62,7 @@ def removeDefaultPattern(name, dirPath, renamedList):
             else:
                 break
 
-        renameFile(name, nameList, dirPath, renamedList)
+        renameFile(name, ''.join(nameList), dirPath, renamedList)
 
 def removePatternAtBeg(name, dirPath, patternToBeRemoved, renamedList):
     ''' Removes the pattern matched at beginning of the filename
