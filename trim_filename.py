@@ -85,7 +85,7 @@ def removePatternInString(name, dirPath, patternToBeRemoved, renamedList):
 def removePatternAtEnd(name, dirPath, patternToBeRemoved, renamedList):
     ''' Matches pattern at end of the name
     '''
-    newname = re.sub( patternToBeRemoved, '', name )
+    newname = re.sub( patternToBeRemoved + '$', '', name )
     if newname != name:
         proceedWithRemoval = input("Do you really want to change "
                "extension (y/n) : ")
@@ -118,12 +118,7 @@ def parseDir(fname, argu):
 
                 elif argu.patternAtEnd:
                     patternToBeRemoved = argu.patternAtEnd
-                    match = re.search('^' + patternToBeRemoved, name)
-
-                    if match:
-                        print('PATT AT END: '+ match.group() +' filename: '+name);
-                        removePatternAtEnd(name, dirPath, patternToBeRemoved,
-                                 renamedList)
+                    removePatternAtEnd(name, dirPath, patternToBeRemoved, renamedList)
 
                 else:
                     #pattern = r'^[\[+ \]+ \d+ _+\s+ -+]+'#^\d+]+'
