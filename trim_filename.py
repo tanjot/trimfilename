@@ -67,14 +67,8 @@ def removeDefaultPattern(name, dirPath, renamedList):
 def removePatternAtBeg(name, dirPath, patternToBeRemoved, renamedList):
     ''' Removes the pattern matched at beginning of the filename
     '''
-    patternLi = list(patternToBeRemoved)
-
-    #will not rename extension or hidden files
-    if name[0] != '.':
-
-        newname = name[len(patternToBeRemoved):]
-
-        renameFile(name, newname, dirPath, renamedList)
+    newname = re.sub( '^' +  patternToBeRemoved, '', name )
+    renameFile(name, newname, dirPath, renamedList)
 
 def removePatternInString(name, dirPath, patternToBeRemoved, renamedList):
     ''' Checks for pattern in whole string and removes it if match is found
@@ -110,10 +104,7 @@ def parseDir(fname, argu):
                             renamedList)
                 elif argu.patternAtBeg:
                     patternToBeRemoved = argu.patternAtBeg
-                    match = re.search('^' + patternToBeRemoved, name)
-                    if match:
-                        print('PATT AT BEG: '+ match.group() +' filename: '+name);
-                        removePatternAtBeg(name, dirPath, patternToBeRemoved,
+                    removePatternAtBeg(name, dirPath, patternToBeRemoved,
                                 renamedList)
 
                 elif argu.patternAtEnd:
