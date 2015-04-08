@@ -82,49 +82,69 @@ def removePatternInString(name, dirPath, patternToBeRemoved, renamedList):
     newname = re.sub( patternToBeRemoved, '', name )
     renameFile(name, newname, dirPath, renamedList)
 
+def removePatternAtEnd(name, dirPath, patternToBeRemoved, renamedList):
+    ''' Matches pattern at end of the name
+    '''
+    newname = re.sub( patternToBeRemoved, '', name )
+    if newname != name:
+        proceedWithRemoval = input("Do you really want to change "
+               "extension (y/n) : ")
+        #TODO: not prompt for each file
+        if(proceedWithRemoval == 'y'):
+            renameFile(name, newname, dirPath, renamedList)
+
+
 def parseDir(fname, argu):
-   print('Entered parseDirfname'+fname)
+    print('Entered parseDirfname'+fname)
 
-   renamedList = []
-   if os.path.exists(fname):
-       for dirPath, dirs, files in os.walk(fname):
+    renamedList = []
+    if os.path.exists(fname):
+        for dirPath, dirs, files in os.walk(fname):
 
-           for name in files:
-               if argu.patternInString:
-                   patternToBeRemoved = argu.patternInString
-                   #print('Find pattern: ' + patternToBeRemoved)
-                   match = re.search(patternToBeRemoved+'\w+', name)
-                   removePatternInString(name, dirPath, patternToBeRemoved,
-                           renamedList)
-               elif argu.patternAtBeg:
-                   #print('Find pattern: '+ argu.patternAtBeg +' at beginning')
+            for name in files:
+                if argu.patternInString:
+                    patternToBeRemoved = argu.patternInString
+                    #print('Find pattern: ' + patternToBeRemoved)
+                    match = re.search(patternToBeRemoved+'\w+', name)
+                    removePatternInString(name, dirPath, patternToBeRemoved,
+                            renamedList)
+                elif argu.patternAtBeg:
+                    patternToBeRemoved = argu.patternAtBeg
+                    match = re.search('^' + patternToBeRemoved, name)
+                    if match:
+                        print('PATT AT BEG: '+ match.group() +' filename: '+name);
+                        removePatternAtBeg(name, dirPath, patternToBeRemoved,
+                                renamedList)
 
-                   patternToBeRemoved = argu.patternAtBeg
-                   match = re.search('^' + patternToBeRemoved, name)
-                   if match:
-                       print('PATT AT BEG: '+ match.group() +' filename: '+name);
-                       removePatternAtBeg(name, dirPath, patternToBeRemoved,
-                               renamedList)
+                elif argu.patternAtEnd:
+                    patternToBeRemoved = argu.patternAtEnd
+                    match = re.search('^' + patternToBeRemoved, name)
 
-               elif argu.patternAtEnd:
-                   patternToBeRemoved = argu.patternAtEnd
-                   print('Find pattern: '+ patternToBeRemoved +' at end')
-               else:
-                   #pattern = r'^[\[+ \]+ \d+ _+\s+ -+]+'#^\d+]+'
-                   removeDefaultPattern(name, dirPath, renamedList)
+                    if match:
+                        print('PATT AT END: '+ match.group() +' filename: '+name);
+                        removePatternAtEnd(name, dirPath, patternToBeRemoved,
+                                 renamedList)
 
-   else:
-        print('Path is not valid')
+                else:
+                    #pattern = r'^[\[+ \]+ \d+ _+\s+ -+]+'#^\d+]+'
+                    removeDefaultPattern(name, dirPath, renamedList)
 
-   if renamedList:
-       print('Files renamed: ')
-       for name in renamedList:
-           print(name)
-       print('Successfully rename '+str(len(renamedList))+' file/s')
+            for name in dirs:
+                fold = os.path.join(dirPath, name)
+                print('Folder: '+fold)
 
-   for name in dirs:
-       fold = os.path.join(dirPath, name)
-       print('Folder: '+fold)
+    else:
+         print('Path is not valid')
+
+    if renamedList:
+         print('Files renamed: ')
+         for name in renamedList:
+             print(name)
+         print('Successfully rename '+str(len(renamedList))+' file/s')
+
+
+
+
 
 if __name__ == '__main__':
     main()
