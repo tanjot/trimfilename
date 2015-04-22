@@ -3,12 +3,13 @@ import sys
 import os
 import re
 import argparse
-#renamed =[]
 
 #define function main
 def main(arg = sys.argv):
+
     #initializing argument parser
     parser = argparse.ArgumentParser()
+    
     #adding arguments
     parser.add_argument("path", help="Give the path name to rename files",
             type=str, nargs='+')
@@ -23,7 +24,8 @@ def main(arg = sys.argv):
 
     #parsing arguments
     argu = parser.parse_args()
-
+    
+    #TODO: not pass argu as parameter
     for name in argu.path:
         print(name)
         parseDir(name,argu)
@@ -36,7 +38,6 @@ def renameFile(oldname, newname, dirPath, renamedList):
     #Does not rename file if it begins with '.' or the whole file name gets
     #deleted after rename and also if there is no change in filename
     if newname and newname[0] != '.' and oldname != newname:
-        #newname = ''.join(newname)
         os.rename(pathNname, os.path.join(dirPath, newname))
         print('Successfully renamed '+pathNname+' to'
                ' '+ newname)
@@ -50,7 +51,6 @@ def renameFile(oldname, newname, dirPath, renamedList):
 def removeDefaultPattern(name, dirPath, renamedList):
     ''' storing name in a list for manipulations on characters individually
     '''
-    #print('Processing file: '+pathNname)
     nameList = list(name)
 
     #To not rename files starting with only '.'
@@ -89,8 +89,11 @@ def removePatternAtEnd(name, dirPath, patternToBeRemoved, renamedList):
 
 
 def parseDir(fname, argu):
+    ''' Parse the path given for all files and folders contained recursively
+    '''
     print('Entered parseDirfname'+fname)
 
+    #renamedList contains the list of files renamed
     renamedList = []
     if os.path.exists(fname):
         for dirPath, dirs, files in os.walk(fname):
@@ -98,7 +101,6 @@ def parseDir(fname, argu):
             for name in files:
                 if argu.patternInString:
                     patternToBeRemoved = argu.patternInString
-                    #print('Find pattern: ' + patternToBeRemoved)
                     match = re.search(patternToBeRemoved+'\w+', name)
                     removePatternInString(name, dirPath, patternToBeRemoved,
                             renamedList)
@@ -112,9 +114,9 @@ def parseDir(fname, argu):
                     removePatternAtEnd(name, dirPath, patternToBeRemoved, renamedList)
 
                 else:
-                    #pattern = r'^[\[+ \]+ \d+ _+\s+ -+]+'#^\d+]+'
                     removeDefaultPattern(name, dirPath, renamedList)
-
+            
+            #Print all directories in current directory
             for name in dirs:
                 fold = os.path.join(dirPath, name)
                 print('Folder: '+fold)
