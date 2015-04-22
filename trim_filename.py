@@ -3,13 +3,17 @@ import sys
 import os
 import re
 import argparse
+from colorama import Fore
+from colorama import init
+
+init(autoreset=True)
 
 #define function main
 def main(arg = sys.argv):
 
     #initializing argument parser
     parser = argparse.ArgumentParser()
-    
+
     #adding arguments
     parser.add_argument("path", help="Give the path name to rename files",
             type=str, nargs='+')
@@ -24,7 +28,7 @@ def main(arg = sys.argv):
 
     #parsing arguments
     argu = parser.parse_args()
-    
+
     #TODO: not pass argu as parameter
     for name in argu.path:
         print(name)
@@ -39,14 +43,15 @@ def renameFile(oldname, newname, dirPath, renamedList):
     #deleted after rename and also if there is no change in filename
     if newname and newname[0] != '.' and oldname != newname:
         os.rename(pathNname, os.path.join(dirPath, newname))
-        print('Successfully renamed '+pathNname+' to'
-               ' '+ newname)
+        #print('Successfully renamed '+pathNname+' to'
+        #       ' '+ newname)
 
         #adding filename to common list of renamed files
-        renamedList.append(pathNname + ' to ' + newname)
+        renamedList.append(pathNname + ' to ' +  Fore.RED + newname )
 
-    else:
-        print('Not renaming, filename : '+pathNname)
+
+   # else:
+   #     print('Not renaming, filename : '+pathNname)
 
 def removeDefaultPattern(name, dirPath, renamedList):
     ''' storing name in a list for manipulations on characters individually
@@ -82,7 +87,7 @@ def removePatternAtEnd(name, dirPath, patternToBeRemoved, renamedList):
     newname = re.sub( patternToBeRemoved + '$', '', name )
     if newname != name:
         proceedWithRemoval = input("Do you really want to change "
-               "extension (y/n) : ")
+               "extension from "+ name +"(y/n) : ")
         #TODO: not prompt for each file
         if(proceedWithRemoval == 'y'):
             renameFile(name, newname, dirPath, renamedList)
@@ -115,7 +120,7 @@ def parseDir(fname, argu):
 
                 else:
                     removeDefaultPattern(name, dirPath, renamedList)
-            
+
             #Print all directories in current directory
             for name in dirs:
                 fold = os.path.join(dirPath, name)
