@@ -1,3 +1,9 @@
 test*
 tags
 *.taghl
+
+__pycache__
+
+#IntelliJ
+.idea
+*.iml
