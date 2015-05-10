@@ -5,6 +5,7 @@ import re
 from colorama import Fore
 from colorama import init
 from .utils import PatternLocations
+from .utils import renameFile
 
 init(autoreset=True)
 
@@ -15,24 +16,8 @@ class TrimFilename:
         self.pattern = pattern
         self.renamed_file_list = []
 
-    def renameFile(self, oldname, newname, dirPath):
-        ''' Renames file if name has changed
-        '''
-        pathNname = os.path.join(dirPath, oldname)
-
-        #Does not rename file if it begins with '.' or the whole file name gets
-        #deleted after rename and also if there is no change in filename
-        if newname and newname[0] != '.' and oldname != newname:
-            os.rename(pathNname, os.path.join(dirPath, newname))
-            #print('Successfully renamed '+pathNname+' to'
-            #       ' '+ newname)
-
-            #adding filename to common list of renamed files
-            self.renamed_file_list.append(pathNname + ' to ' +  Fore.RED + newname )
-
-
-       # else:
-       #     print('Not renaming, filename : '+pathNname)
+    def add_to_renamed_list(self, old_name, new_name, dir_path):
+        self.renamed_file_list.append(os.path.join(dir_path, old_name) + " to: " + Fore.RED + new_name)
 
     def removeDefaultPattern(self, name, dirPath):
         ''' storing name in a list for manipulations on characters individually
@@ -48,31 +33,36 @@ class TrimFilename:
                 else:
                     break
 
-            self.renameFile(name, ''.join(nameList), dirPath)
+            new_name = ''.join(nameList)
+
+            if renameFile(name, new_name, dirPath):
+                self.add_to_renamed_list(name, new_name, dirPath)
 
     def removePatternAtBeg(self, name, dirPath, patternToBeRemoved):
         ''' Removes the pattern matched at beginning of the filename
         '''
-        newname = re.sub( '^' +  patternToBeRemoved, '', name )
-        self.renameFile(name, newname, dirPath)
+        new_name = re.sub( '^' +  patternToBeRemoved, '', name)
+        if renameFile(name, new_name, dirPath):
+            self.add_to_renamed_list(name, new_name, dirPath)
 
     def removePatternInString(self, name, dirPath, patternToBeRemoved):
         ''' Checks for pattern in whole string and removes it if match is found
         '''
-        newname = re.sub( patternToBeRemoved, '', name )
-        self.renameFile(name, newname, dirPath)
+        new_name = re.sub( patternToBeRemoved, '', name )
+        if renameFile(name, new_name, dirPath):
+            self.add_to_renamed_list(name, new_name, dirPath)
 
     def removePatternAtEnd(self, name, dirPath, patternToBeRemoved):
         ''' Matches pattern at end of the name
         '''
-        newname = re.sub( patternToBeRemoved + '$', '', name )
-        if newname != name:
+        new_name = re.sub( patternToBeRemoved + '$', '', name )
+        if new_name != name:
             proceedWithRemoval = input("Do you really want to change "
-                   "extension from "+ name +"(y/n) : ")
+                   "extension from " + name + " to " + new_name + "(y/n) : ")
             #TODO: not prompt for each file
             if(proceedWithRemoval == 'y'):
-                self.renameFile(name, newname, dirPath)
-
+                if renameFile(name, new_name, dirPath):
+                    self.add_to_renamed_list(name, new_name, dirPath)
 
     def parseDir(self, path):
         ''' Parse the path given for all files and folders contained recursively
@@ -109,3 +99,5 @@ class TrimFilename:
              for name in self.renamed_file_list:
                  print(name)
              print('Successfully rename '+str(len(self.renamed_file_list))+' file/s')
+        else:
+            print(Fore.RED + "No file renamed")
