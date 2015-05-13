@@ -14,15 +14,15 @@ class TrimFilename:
     def __init__(self, pattern_position, pattern):
         self.pattern_position = pattern_position
         self.pattern = pattern
-        self.renamed_file_list = []
+        self.renamed_files_list = {}
         self.longest_string_length = 0
 
     def add_to_renamed_list(self, old_name, new_name, dir_path):
         old_path = os.path.join(dir_path, old_name)
 
-        if self.longest_string_length < old_path:
+        if self.longest_string_length < len(old_path):
             self.longest_string_length = len(old_path)
-        self.renamed_file_list.append(old_path + " to: " + Fore.RED + new_name)
+        self.renamed_files_list[old_path]=new_name
 
     def removeDefaultPattern(self, name, dirPath):
         ''' storing name in a list for manipulations on characters individually
@@ -99,10 +99,12 @@ class TrimFilename:
         else:
              print('Path is not valid')
 
-        if self.renamed_file_list:
+        if self.renamed_files_list:
              print('Files renamed: ')
-             for name in self.renamed_file_list:
-                 print(name)
-             print('Successfully rename '+str(len(self.renamed_file_list))+' file/s')
+
+             for old_path, new_name in self.renamed_files_list.items():
+                 print(old_path + ' : ' + Fore.RED + new_name)
+             print('Successfully rename '+str(len(self.renamed_files_list))+' file/s')
+
         else:
             print(Fore.RED + "No file renamed")
