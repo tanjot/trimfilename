@@ -15,13 +15,10 @@ class TrimFilename:
         self.pattern_position = pattern_position
         self.pattern = pattern
         self.renamed_files_list = {}
-        self.longest_string_length = 0
 
     def add_to_renamed_list(self, old_name, new_name, dir_path):
         old_path = os.path.join(dir_path, old_name)
 
-        if self.longest_string_length < len(old_path):
-            self.longest_string_length = len(old_path)
         self.renamed_files_list[old_path]=new_name
 
     def removeDefaultPattern(self, name, dirPath):
