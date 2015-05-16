@@ -6,7 +6,7 @@ import argparse
 from .trimfilename import TrimFilename
 from .utils import PatternLocations
 
-def main():
+def parse_args():
     #initializing argument parser
     parser = argparse.ArgumentParser()
 
@@ -24,6 +24,11 @@ def main():
 
     #parsing arguments
     argu = parser.parse_args()
+    return argu
+
+def main():
+
+    argu = parse_args()
 
     pattern_location = None
     pattern = None
