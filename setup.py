@@ -1,5 +1,11 @@
 from setuptools import setup
 
+add_keywords = dict(
+    entry_points = {
+        'console_scripts': ['trimfilename = trimfilename.main:main'],
+        },
+)
+
 setup(
 
     name="trimfilename",
@@ -9,5 +15,6 @@ setup(
     url="https://github.com/tanjot/trimfilename",
     author="Tanjot Kaur",
     author_email="tanjot28@gmail.com",
-    packages=['trimfilename']
+    packages=['trimfilename'],
+    **add_keywords
 )
