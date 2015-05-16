@@ -2,8 +2,14 @@ test*
 tags
 *.taghl
 
+# Compiled files
 __pycache__
+.pyc
 
-#IntelliJ
+# IntelliJ
 .idea
 *.iml
+
+# Package directory
+*.egg-info
+dist/
