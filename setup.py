@@ -17,7 +17,7 @@ except (IOError, ImportError):
 setup(
 
     name="trimfilename",
-    version="0.5",
+    version="0.5.1",
     license='GPLv3',
     description="Remove string patterns from filenames",
     url="https://github.com/tanjot/trimfilename",
