@@ -99,9 +99,14 @@ class TrimFilename:
         if self.renamed_files_list:
              print('Files renamed: ')
 
+             str_format = self.get_string_format(self.renamed_files_list.keys())
              for old_path, new_name in self.renamed_files_list.items():
-                 print(old_path + ' : ' + Fore.RED + new_name)
+                 print(str_format.format(old_path, ': ' + Fore.RED +   new_name))
              print('Successfully rename '+str(len(self.renamed_files_list))+' file/s')
 
         else:
             print(Fore.RED + "No file renamed")
+
+    def get_string_format(self, list):
+        str_format = '{0:<' + str(len(max(list, key=len))) + '} {1}'
+        return str_format
