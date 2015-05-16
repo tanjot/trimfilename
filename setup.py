@@ -6,6 +6,14 @@ add_keywords = dict(
         },
 )
 
+try:
+    import pypandoc
+    long_description = pypandoc.convert('README.md', 'rst')
+except (IOError, ImportError):
+    fhan = open('README.txt')
+    long_description = fhan.read()
+    fhan.close()
+
 setup(
 
     name="trimfilename",
