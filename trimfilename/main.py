@@ -3,7 +3,7 @@
 import sys
 import argparse
 
-from .trim_filename import TrimFilename
+from .trimfilename import TrimFilename
 from .utils import PatternLocations
 
 def main():
