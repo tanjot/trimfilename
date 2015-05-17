@@ -15,11 +15,10 @@ except (IOError, ImportError):
     fhan.close()
 
 setup(
-
     name="trimfilename",
     version="0.5.1",
     license='GPLv3',
-    description=long_description,
+    long_description=long_description,
     url="https://github.com/tanjot/trimfilename",
     author="Tanjot Kaur",
     author_email="tanjot28@gmail.com",
