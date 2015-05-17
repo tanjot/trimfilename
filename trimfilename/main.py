@@ -14,13 +14,14 @@ def parse_args():
     parser.add_argument("path", help="Give the path name to rename files",
                         type=str, nargs='+')
     parser.add_argument("-p", "--patternInString", help="Give the pattern that is to "
-                                                        "be removed", type=str)
-    parser.add_argument("-pb", "--patternAtBeg", help="Pattern to be removed "
+                                                      "be removed", type=str)
+    parser.add_argument("-b", "--patternAtBeg", help="Pattern to be removed "
                                                       "is matched at beginning of the filenames", type=str)
-    parser.add_argument("-pe", "--patternAtEnd", help="Pattern to be removed "
+    parser.add_argument("-e", "--patternAtEnd", help="Pattern to be removed "
                                                       "is matched at end of the filenames(extension should be "
                                                       "included in pattern)", type=str)
-
+    parser.add_argument("-i", "--ignoreCase", help="Ignore case for the pattern "
+                                                      "to be replaced", type=bool, default=False)
 
     #parsing arguments
     argu = parser.parse_args()
