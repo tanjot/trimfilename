@@ -44,21 +44,34 @@ class TrimFilename:
     def remove_pattern_at_beg(self, name, dirPath, patternToBeRemoved):
         ''' Removes the pattern matched at beginning of the filename
         '''
-        new_name = re.sub( '^' +  patternToBeRemoved, '', name)
+        if self.ignore_case:
+            new_name = re.sub( '^' + patternToBeRemoved, '', name, flags=re.IGNORECASE)
+        else:
+            new_name = re.sub( '^' +  patternToBeRemoved, '', name)
+
         if rename_file(name, new_name, dirPath):
             self.add_to_renamed_list(name, new_name, dirPath)
 
     def remove_pattern_in_string(self, name, dirPath, patternToBeRemoved):
         ''' Checks for pattern in whole string and removes it if match is found
         '''
-        new_name = re.sub( patternToBeRemoved, '', name )
+        if self.ignore_case:
+            new_name = re.sub( patternToBeRemoved, '', name, flags=re.IGNORECASE)
+        else:
+            new_name = re.sub( patternToBeRemoved, '', name )
+
         if rename_file(name, new_name, dirPath):
             self.add_to_renamed_list(name, new_name, dirPath)
+
 
     def remove_pattern_at_end(self, name, dirPath, patternToBeRemoved):
         ''' Matches pattern at end of the name
         '''
-        new_name = re.sub( patternToBeRemoved + '$', '', name )
+        if self.ignore_case:
+            new_name = re.sub( patternToBeRemoved + '$', '', name, flags=re.IGNORECASE)
+        else:
+            new_name = re.sub( patternToBeRemoved + '$', '', name )
+
         if new_name != name:
             proceedWithRemoval = input("Do you really want to change "
                    "extension from " + name + " to " + new_name + "(y/n) : ")
