@@ -6,7 +6,7 @@ class PatternLocations:
     patternInString = 3
 
 
-def renameFile(oldname, newname, dirPath):
+def rename_file(oldname, newname, dirPath):
     ''' Renames file if name has changed
     '''
 

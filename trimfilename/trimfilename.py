@@ -5,7 +5,7 @@ import re
 from colorama import Fore
 from colorama import init
 from .utils import PatternLocations
-from .utils import renameFile
+from .utils import rename_file
 
 init(autoreset=True)
 
@@ -21,7 +21,7 @@ class TrimFilename:
 
         self.renamed_files_list[old_path]=new_name
 
-    def removeDefaultPattern(self, name, dirPath):
+    def remove_default_pattern(self, name, dirPath):
         ''' storing name in a list for manipulations on characters individually
         '''
         nameList = list(name)
@@ -37,24 +37,24 @@ class TrimFilename:
 
             new_name = ''.join(nameList)
 
-            if renameFile(name, new_name, dirPath):
+            if rename_file(name, new_name, dirPath):
                 self.add_to_renamed_list(name, new_name, dirPath)
 
-    def removePatternAtBeg(self, name, dirPath, patternToBeRemoved):
+    def remove_pattern_at_beg(self, name, dirPath, patternToBeRemoved):
         ''' Removes the pattern matched at beginning of the filename
         '''
         new_name = re.sub( '^' +  patternToBeRemoved, '', name)
-        if renameFile(name, new_name, dirPath):
+        if rename_file(name, new_name, dirPath):
             self.add_to_renamed_list(name, new_name, dirPath)
 
-    def removePatternInString(self, name, dirPath, patternToBeRemoved):
+    def remove_pattern_in_string(self, name, dirPath, patternToBeRemoved):
         ''' Checks for pattern in whole string and removes it if match is found
         '''
         new_name = re.sub( patternToBeRemoved, '', name )
-        if renameFile(name, new_name, dirPath):
+        if rename_file(name, new_name, dirPath):
             self.add_to_renamed_list(name, new_name, dirPath)
 
-    def removePatternAtEnd(self, name, dirPath, patternToBeRemoved):
+    def remove_pattern_at_end(self, name, dirPath, patternToBeRemoved):
         ''' Matches pattern at end of the name
         '''
         new_name = re.sub( patternToBeRemoved + '$', '', name )
@@ -63,7 +63,7 @@ class TrimFilename:
                    "extension from " + name + " to " + new_name + "(y/n) : ")
             #TODO: not prompt for each file
             if(proceedWithRemoval == 'y'):
-                if renameFile(name, new_name, dirPath):
+                if rename_file(name, new_name, dirPath):
                     self.add_to_renamed_list(name, new_name, dirPath)
 
     def parseDir(self, path):
@@ -77,16 +77,16 @@ class TrimFilename:
 
                 for name in files:
                     if self.pattern_position == PatternLocations.patternInString:
-                        self.removePatternInString(name, dirPath, self.pattern)
+                        self.remove_pattern_in_string(name, dirPath, self.pattern)
 
                     elif self.pattern_position == PatternLocations.patternAtBeg:
-                        self.removePatternAtBeg(name, dirPath, self.pattern)
+                        self.remove_pattern_at_beg(name, dirPath, self.pattern)
 
                     elif self.pattern_position == PatternLocations.patternAtEnd:
-                        self.removePatternAtEnd(name, dirPath, self.pattern)
+                        self.remove_pattern_at_end(name, dirPath, self.pattern)
 
                     else:
-                        self.removeDefaultPattern(name, dirPath)
+                        self.remove_default_pattern(name, dirPath)
 
                 #Print all directories in current directory
                 for name in dirs:
