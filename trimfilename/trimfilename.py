@@ -11,10 +11,11 @@ init(autoreset=True)
 
 class TrimFilename:
 
-    def __init__(self, pattern_position, pattern):
+    def __init__(self, pattern_position, pattern, ignore_case):
         self.pattern_position = pattern_position
         self.pattern = pattern
         self.renamed_files_list = {}
+        self.ignore_case = ignore_case
 
     def add_to_renamed_list(self, old_name, new_name, dir_path):
         old_path = os.path.join(dir_path, old_name)

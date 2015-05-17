@@ -13,15 +13,15 @@ def parse_args():
     #adding arguments
     parser.add_argument("path", help="Give the path name to rename files",
                         type=str, nargs='+')
-    parser.add_argument("-p", "--patternInString", help="Give the pattern that is to "
-                                                      "be removed", type=str)
+    parser.add_argument("-p", "--patternInString", help="Give the pattern that"
+                        " is to be removed", type=str)
     parser.add_argument("-b", "--patternAtBeg", help="Pattern to be removed "
-                                                      "is matched at beginning of the filenames", type=str)
+                        "is matched at beginning of the filenames", type=str)
     parser.add_argument("-e", "--patternAtEnd", help="Pattern to be removed "
-                                                      "is matched at end of the filenames(extension should be "
-                                                      "included in pattern)", type=str)
+                        "is matched at end of the filenames(extension should "
+                        "be included in pattern)", type=str)
     parser.add_argument("-i", "--ignoreCase", help="Ignore case for the pattern "
-                                                      "to be replaced", type=bool, default=False)
+                        "to be replaced", action="store_true")
 
     #parsing arguments
     argu = parser.parse_args()
@@ -44,11 +44,14 @@ def main():
         pattern_location = PatternLocations.patternAtEnd
         pattern = argu.patternAtEnd
 
+    ignore_case = False
+    if argu.ignoreCase:
+        ignore_case = True
 
-    trimfilename_handle = TrimFilename(pattern_location, pattern)
+    trimfilename_handle = TrimFilename(pattern_location, pattern, ignore_case)
     #TODO: not pass argu as parameter
     for name in argu.path:
-        print(name)
+        print("parsing directory: " + name)
         trimfilename_handle.parseDir(name)
 
 if __name__ == '__main__':
