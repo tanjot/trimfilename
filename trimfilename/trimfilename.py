@@ -83,7 +83,6 @@ class TrimFilename:
     def parseDir(self, path):
         ''' Parse the path given for all files and folders contained recursively
         '''
-        print('Entered parseDirfname'+path)
 
         #renamedList contains the list of files renamed
         if os.path.exists(path):

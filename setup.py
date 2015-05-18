@@ -13,7 +13,7 @@ except (IOError, ImportError):
     fhan = open('README.txt')
     long_description = fhan.read()
     fhan.close()
-
+    
 setup(
     name="trimfilename",
     version="0.5.1",
