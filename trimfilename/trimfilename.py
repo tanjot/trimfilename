@@ -31,8 +31,10 @@ class TrimFilename:
         if nameList[0] != '.':
             for char in name:
                 #remove all non alphabet characters from filename
-                if not(char.isalpha() or char == '.'):
+                if char.isalpha() is False:
                     del(nameList[nameList.index(char)])
+                elif char == '.' and (''.join(nameList).count('.')) > 1:
+                        del(nameList[nameList.index(char)])
                 else:
                     break
 
