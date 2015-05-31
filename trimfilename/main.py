@@ -13,6 +13,7 @@ def parse_args():
     #adding arguments
     parser.add_argument("path", help="Give the path name to rename files",
                         type=str, nargs='+')
+    parser.add_argument("-f", "--folder", help="Give path for folder")
     parser.add_argument("-p", "--patternInString", help="Give the pattern that"
                         " is to be removed", type=str)
     parser.add_argument("-b", "--patternAtBeg", help="Pattern to be removed "
