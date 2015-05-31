@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import os
 import sys
 import argparse
 
@@ -11,8 +12,6 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     #adding arguments
-    parser.add_argument("path", help="Give the path name to rename files",
-                        type=str, nargs='+')
     parser.add_argument("-f", "--folder", help="Give path for folder")
     parser.add_argument("-p", "--patternInString", help="Give the pattern that"
                         " is to be removed", type=str)
@@ -50,10 +49,12 @@ def main():
         ignore_case = True
 
     trimfilename_handle = TrimFilename(pattern_location, pattern, ignore_case)
-    #TODO: not pass argu as parameter
-    for name in argu.path:
-        print("parsing directory: " + name)
-        trimfilename_handle.parseDir(name)
+
+    if argu.folder is None:
+        argu.folder = os.path.realpath(__file__)
+
+    print("parsing directory: " + argu.folder)
+    trimfilename_handle.parseDir(argu.folder)
 
 if __name__ == '__main__':
     sys.exit(main())
