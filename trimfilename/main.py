@@ -12,7 +12,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     #adding arguments
-    parser.add_argument("-f", "--folder", help="Give path for folder")
+    parser.add_argument("-f", "--folder", help="Give path for folder", nargs='+', type=str)
     parser.add_argument("-p", "--patternInString", help="Give the pattern that"
                         " is to be removed", type=str)
     parser.add_argument("-b", "--patternAtBeg", help="Pattern to be removed "
@@ -51,10 +51,11 @@ def main():
     trimfilename_handle = TrimFilename(pattern_location, pattern, ignore_case)
 
     if argu.folder is None:
-        argu.folder = os.path.realpath(__file__)
+        argu.folder = [os.path.realpath(__file__)]
 
-    print("parsing directory: " + argu.folder)
-    trimfilename_handle.parseDir(argu.folder)
+    for path in argu.folder:
+        print("parsing directory: " + path)
+        trimfilename_handle.parseDir(path)
 
 if __name__ == '__main__':
     sys.exit(main())
