@@ -12,7 +12,7 @@ def rename_file(oldname, newname, dirPath):
 
     changed_file_name = False
 
-    if oldname.rfind('.') == newname.rfind('.'):
+    if (len(oldname)-oldname.rfind('.')) == (len(newname)-newname.rfind('.')):
         old_file_path = os.path.join(dirPath, oldname)
 
         #Does not rename file if it begins with '.' or the whole file name gets
@@ -23,5 +23,6 @@ def rename_file(oldname, newname, dirPath):
             #       ' '+ newname)
 
             changed_file_name = True
+    #else log for extension changed
 
     return changed_file_name
