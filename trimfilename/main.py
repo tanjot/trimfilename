@@ -51,7 +51,7 @@ def main():
     trimfilename_handle = TrimFilename(pattern_location, pattern, ignore_case)
 
     if argu.folder is None:
-        argu.folder = [os.path.realpath(__file__)]
+        argu.folder = [os.getcwd()]
 
     for path in argu.folder:
         print("parsing directory: " + path)
