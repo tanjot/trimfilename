@@ -11,15 +11,15 @@ Files are recursively checked for a pattern match on the path user mentions.
 ```sh
 
 home $ ls songs
-04_maroon5_-_she_will_be_loved-tn.mp3        05 Flo Rida - Whistle.mp3
-Nelly - Just A Dream 2010.mp3                David Archuleta - A Little Too Not Over You000.mp3
+04_maroon5_she_will_be_loved.mp3        05 Flo Rida-Whistle.mp3
+Nelly-Just A Dream 2010.mp3             David Archuleta - A Little Too Not Over You000.mp3
 
 
 home $ trimfilename songs
 parsing directory: songs
 Files renamed:
-songs/04_maroon5_-_she_will_be_loved-tn.mp3 : maroon5_-_she_will_be_loved-tn.mp3
-songs/05 Flo Rida - Whistle.mp3             : Flo Rida - Whistle.mp3
+songs/04_maroon5_she_will_be_loved.mp3    : maroon5_-_she_will_be_loved-tn.mp3
+songs/05 Flo Rida-Whistle.mp3             : Flo Rida - Whistle.mp3
 
 Successfully renamed 2 file/s
 
