@@ -28,10 +28,10 @@ def list_files(startpath):
     for root, _, files in os.walk(startpath):
         level = root.replace(startpath, '').count(os.sep)
         indent = ' ' * INDENT * (level)
-        print('{}{}/'.format(indent, os.path.basename(root)))
+        print('{}|_ {}/'.format(indent, os.path.basename(root)))
         subindent = ' ' * SUBINDENT * (level + 1)
         for f in files:
-            print('{}{}'.format(subindent, f))
+            print('{}|-- {}'.format(subindent, f))
 
 
 def create(path):
