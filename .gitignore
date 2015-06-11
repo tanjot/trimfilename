@@ -1,5 +1,5 @@
 # Local
-test*
+tmp/
 tags
 *.taghl
 MANIFEST

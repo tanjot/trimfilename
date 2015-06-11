@@ -3,7 +3,7 @@
 import os
 
 def main():
-    test_folder = 'test'
+    test_folder = 'tmp'
     if os.path.isdir(test_folder) is False:
         os.mkdir(test_folder)
 
