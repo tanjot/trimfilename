@@ -5,10 +5,20 @@ import os
 
 def main():
     test_folder = 'tmp'
-    files_to_create = ['123xyz.txt', 'blaabc.blamp3', 'abc.abc']
+    for file_name in get_file_structure():
+        create(os.path.join(test_folder, file_name))
 
-    for file in files_to_create:
-        create(os.path.join(test_folder, file))
+
+def get_file_structure():
+    simple_files = ['123xyz.txt', 'fooabc.barmp3', 'abc.abc', '00000000.txt']
+    level1_files = ['l1/01-artist-songname.mp3', 'l1/12foo.bar']
+    level2_files = ['l1/l2/12.34.56.txt', 'l1/l2/foo.bar']
+
+    files = []
+    files.extend(simple_files)
+    files.extend(level1_files)
+    files.extend(level2_files)
+    return files
 
 
 def create(path):
