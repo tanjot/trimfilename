@@ -3,8 +3,11 @@ from setuptools import setup
 add_keywords = dict(
     entry_points = {
         'console_scripts': ['trimfilename = trimfilename.main:main'],
-        },
-)
+        }, )
+
+fhan = open('requirements.txt', 'rU')
+requires = [line.strip() for line in fhan.readlines()]
+fhan.close()
 
 try:
     import pypandoc
@@ -17,12 +20,13 @@ except (IOError, ImportError):
 setup(
     name="trimfilename",
     version="0.7.2",
+    packages=['trimfilename'],
     license='GPLv3',
     description="Trim useless characters from filenames",
     long_description=long_description,
     url="https://github.com/tanjot/trimfilename",
     author="Tanjot Kaur",
     author_email="tanjot28@gmail.com",
-    packages=['trimfilename'],
+    install_requires=requires,
     **add_keywords
 )
