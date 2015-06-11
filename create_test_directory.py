@@ -10,8 +10,11 @@ def main():
     files_to_create = ['123xyz.txt', 'blaabc.blamp3', 'abc.abc']
 
     for file in files_to_create:
-        os.system('touch ' + os.path.join(test_folder, file))
+        touch(os.path.join(test_folder, file))
 
+def touch(fname, times=None):
+    with open(fname, 'a'):
+        os.utime(fname, times)
 
 if __name__ == '__main__':
     main()
