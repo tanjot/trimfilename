@@ -19,7 +19,7 @@ except (IOError, ImportError):
 
 setup(
     name="trimfilename",
-    version="0.7.2",
+    version="0.7.3",
     packages=['trimfilename'],
     license='GPLv3',
     description="Trim useless characters from filenames",
