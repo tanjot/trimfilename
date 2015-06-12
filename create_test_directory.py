@@ -22,7 +22,6 @@ def get_file_structure():
     return files
 
 
-
 def list_files(startpath):
     INDENT = SUBINDENT = 2
     for root, _, files in os.walk(startpath):

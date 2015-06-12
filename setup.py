@@ -1,9 +1,9 @@
 from setuptools import setup
 
 add_keywords = dict(
-    entry_points = {
+    entry_points={
         'console_scripts': ['trimfilename = trimfilename.main:main'],
-        }, )
+    }, )
 
 fhan = open('requirements.txt', 'rU')
 requires = [line.strip() for line in fhan.readlines()]
