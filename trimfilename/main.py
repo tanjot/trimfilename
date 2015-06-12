@@ -8,10 +8,8 @@ from .trimfilename import TrimFilename
 from .utils import PatternLocations
 
 def parse_args():
-    #initializing argument parser
     parser = argparse.ArgumentParser()
 
-    #adding arguments
     parser.add_argument("-f", "--folder", help="Give path for folder", nargs='+', type=str)
     parser.add_argument("-p", "--patternInString", help="Give the pattern that"
                         " is to be removed", type=str)
@@ -23,9 +21,7 @@ def parse_args():
     parser.add_argument("-i", "--ignoreCase", help="Ignore case for the pattern "
                         "to be replaced", action="store_true")
 
-    #parsing arguments
-    argu = parser.parse_args()
-    return argu
+    return parser.parse_args()
 
 def main():
 
