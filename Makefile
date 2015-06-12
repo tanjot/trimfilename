@@ -22,7 +22,7 @@ nosetests_3:
 install:
 	@echo "Creating distribution package for version $(VERSION)"
 	@echo "-----------------------------------------------"
-	$(PYTHON_EXEC) setup.py sdist
+	$(PYTHON3_EXEC) setup.py sdist
 	@echo "Installing package using $(PIP_EXEC)"
 	@echo "----------------------------"
 	$(PIP_EXEC) install --upgrade dist/$(PACKAGE)-$(VERSION).tar.gz
