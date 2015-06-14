@@ -19,7 +19,7 @@ class TestRenameFile(unittest.TestCase):
 
     @patch('os.rename')
     def test_rename_file_returns_true_if_filename_modified(self, mock_rename):
-        mock_rename.return_value = 0
+        mock_rename.return_value=True
         oldname='123blaa.mp3'
         newname='laa.mp3'
         path='./'
@@ -29,7 +29,9 @@ class TestRenameFile(unittest.TestCase):
         self.assertTrue(output)
 
 
-    def test_rename_file_returns_false_if_extension_missing(self):
+    @patch('os.rename')
+    def test_rename_file_returns_false_if_extension_missing(self, mock_rename):
+        mock_rename.return_value=True
         oldname='blaa.txt'
         newname='blaatxt'
         path='./'
@@ -38,7 +40,9 @@ class TestRenameFile(unittest.TestCase):
 
         self.assertFalse(output)
 
-    def test_rename_file_returns_false_if_extension_changed(self):
+    @patch('os.rename')
+    def test_rename_file_returns_false_if_extension_changed(self, mock_rename):
+        mock_rename.return_value=True
         oldname='blaa.txt'
         newname='blaa.x'
         path='./'
