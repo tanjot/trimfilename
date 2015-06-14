@@ -28,3 +28,12 @@ class TestRenameFile(unittest.TestCase):
 
         self.assertTrue(output)
 
+
+    def test_rename_file_returns_false_if_extension_missing(self):
+        oldname='blaa.txt'
+        newname='blaatxt'
+        path='./'
+
+        output = rename_file(oldname, newname, path)
+
+        self.assertFalse(output)
