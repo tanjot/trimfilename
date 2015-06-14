@@ -76,14 +76,8 @@ class TrimFilename:
         else:
             new_name = re.sub(patternToBeRemoved + '$', '', name)
 
-        if new_name != name:
-            proceedWithRemoval = input(
-                "Do you really want to change "
-                "extension from " + name + " to " + new_name + "(y/n) : ")
-            # TODO: not prompt for each file
-            if (proceedWithRemoval == 'y'):
-                if rename_file(name, new_name, dirPath):
-                    self.add_to_renamed_list(name, new_name, dirPath)
+        if rename_file(name, new_name, dirPath):
+            self.add_to_renamed_list(name, new_name, dirPath)
 
     def parseDir(self, path):
         ''' Parse the path given for all files and folders contained recursively
