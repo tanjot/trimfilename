@@ -15,9 +15,9 @@ except ImportError as e:
 
 from trimfilename.utils import rename_file
 
+@patch('os.rename')
 class TestRenameFile(unittest.TestCase):
 
-    @patch('os.rename')
     def test_rename_file_returns_true_if_filename_modified(self, mock_rename):
         mock_rename.return_value=True
         oldname='123blaa.mp3'
@@ -28,8 +28,6 @@ class TestRenameFile(unittest.TestCase):
 
         self.assertTrue(output)
 
-
-    @patch('os.rename')
     def test_rename_file_returns_false_if_extension_missing(self, mock_rename):
         mock_rename.return_value=True
         oldname='blaa.txt'
@@ -40,7 +38,6 @@ class TestRenameFile(unittest.TestCase):
 
         self.assertFalse(output)
 
-    @patch('os.rename')
     def test_rename_file_returns_false_if_extension_changed(self, mock_rename):
         mock_rename.return_value=True
         oldname='blaa.txt'
