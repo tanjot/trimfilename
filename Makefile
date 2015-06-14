@@ -40,7 +40,7 @@ test:
 test3:
 	@- $(foreach TEST,$(TESTS), \
 		echo === Running python3 test: $(TEST); \
-		$(PYTHON3_EXEC) -m $(TEST) $(PYFLAGS); \
+		$(PYTHON_EXEC) -m $(TEST) $(PYFLAGS); \
 		)
 
 clean:
