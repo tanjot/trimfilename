@@ -11,8 +11,8 @@ def main():
 
 
 def get_file_structure():
-    simple_files = ['123xyz.txt', 'fooabc.barmp3', 'abc.abc', '00000000.txt']
-    level1_files = ['l1/01-artist-songname.mp3', 'l1/12foo.bar']
+    simple_files = ['123abc.txt', '123xyz.txt', 'fooabc.barmp3', 'abc.abc', '00000000.txt']
+    level1_files = ['l1/01-artist-songname.mp3', 'l1/12foo.bar', 'l1/123abc.txt']
     level2_files = ['l1/l2/12.34.56.txt', 'l1/l2/foo.bar']
 
     files = []
