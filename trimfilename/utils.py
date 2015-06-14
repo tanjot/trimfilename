@@ -25,9 +25,10 @@ def rename_file(oldname, newname, dirPath):
                 os.rename(old_file_path, os.path.join(dirPath, newname))
                 # print('Successfully renamed '+pathNname+' to'
                 #       ' '+ newname)
-
                 changed_file_name = True
-            # else log for extension changed
+            else:
+                print('Could not rename ' + old_file_path + ' to ' + Fore.YELLOW + newname)
+                print('There was probably some issue with extension')
         else:
             print('File '+old_file_path+' cannot be renamed, '+ Fore.YELLOW + newname+' already exists')
 
