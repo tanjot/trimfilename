@@ -57,3 +57,14 @@ class TestRenameFile(unittest.TestCase):
         output = rename_file(oldname, newname, path)
 
         self.assertFalse(output)
+
+
+    def test_rename_file_returns_false_if_oldname_newname_are_same(self, mock_rename):
+        mock_rename.return_value=True
+        oldname='132blaa.txt'
+        newname='132blaa.txt'
+        path='./'
+
+        output = rename_file(oldname, newname, path)
+
+        self.assertFalse(output)
