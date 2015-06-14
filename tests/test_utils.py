@@ -79,4 +79,13 @@ class TestRenameFile(unittest.TestCase):
         output = rename_file(oldname, newname, path)
 
         self.assertFalse(output)
-	
+
+    def test_rename_file_if_extension_removed(self, mock_rename):
+        mock_rename.return_value=True
+        oldname='123.45.abc.txt'
+        newname='123.45.abc.'
+        path='./'
+
+        output = rename_file(oldname, newname, path)
+
+        self.assertFalse(output)
