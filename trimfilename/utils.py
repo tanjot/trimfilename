@@ -1,5 +1,6 @@
 import os
 
+from colorama import Fore
 
 class PatternLocations:
     patternAtBeg = 1
@@ -26,6 +27,8 @@ def rename_file(oldname, newname, dirPath):
                 #       ' '+ newname)
 
                 changed_file_name = True
-        # else log for extension changed
+            # else log for extension changed
+        else:
+            print('File '+old_file_path+' cannot be renamed, '+ Fore.YELLOW + newname+' already exists')
 
     return changed_file_name
