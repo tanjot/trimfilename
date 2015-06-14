@@ -37,3 +37,12 @@ class TestRenameFile(unittest.TestCase):
         output = rename_file(oldname, newname, path)
 
         self.assertFalse(output)
+
+    def test_rename_file_returns_false_if_extension_changed(self):
+        oldname='blaa.txt'
+        newname='blaa.x'
+        path='./'
+
+        output = rename_file(oldname, newname, path)
+
+        self.assertFalse(output)
