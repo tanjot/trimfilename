@@ -20,7 +20,7 @@ class TestRenameFile(unittest.TestCase):
     @patch('os.rename')
     def test_rename_file_returns_true_if_filename_modified(self, mock_rename):
         mock_rename.return_value = 0
-        oldname='blaa.mp3'
+        oldname='123blaa.mp3'
         newname='laa.mp3'
         path='./'
 
