@@ -1,14 +1,14 @@
 #!/usr/bin/python3
-import os
-import re
 
 from colorama import Fore
 from colorama import init
 from .utils import PatternLocations
 from .utils import rename_file
 
-init(autoreset=True)
+import os
+import re
 
+init(autoreset=True)
 
 class TrimFilename:
     def __init__(self, pattern_position, pattern, ignore_case):
@@ -17,17 +17,19 @@ class TrimFilename:
         self.renamed_files_list = {}
         self.ignore_case = ignore_case
 
+
     def add_to_renamed_list(self, old_name, new_name, dir_path):
         old_path = os.path.join(dir_path, old_name)
 
         self.renamed_files_list[old_path] = new_name
+
 
     def remove_default_pattern(self, name, dirPath):
         """ storing name in a list for manipulations on characters individually
         """
         nameList = list(name)
 
-        # To not rename files starting with only '.'
+        # Do not rename files starting with only '.'
         if nameList[0] != '.':
             for char in name:
                 # remove all non alphabet characters from filename
@@ -43,6 +45,7 @@ class TrimFilename:
             if rename_file(name, new_name, dirPath):
                 self.add_to_renamed_list(name, new_name, dirPath)
 
+
     def remove_pattern_at_beg(self, name, dirPath, patternToBeRemoved):
         """ Removes the pattern matched at beginning of the filename
         """
@@ -54,6 +57,7 @@ class TrimFilename:
 
         if rename_file(name, new_name, dirPath):
             self.add_to_renamed_list(name, new_name, dirPath)
+
 
     def remove_pattern_in_string(self, name, dirPath, patternToBeRemoved):
         """ Checks for pattern in whole string and removes it if match is found
@@ -67,6 +71,7 @@ class TrimFilename:
         if rename_file(name, new_name, dirPath):
             self.add_to_renamed_list(name, new_name, dirPath)
 
+
     def remove_pattern_at_end(self, name, dirPath, patternToBeRemoved):
         """ Matches pattern at end of the name
         """
@@ -78,6 +83,7 @@ class TrimFilename:
 
         if rename_file(name, new_name, dirPath):
             self.add_to_renamed_list(name, new_name, dirPath)
+
 
     def parseDir(self, path):
         ''' Parse the path given for all files and folders contained recursively
@@ -120,6 +126,7 @@ class TrimFilename:
 
         else:
             print(Fore.RED + "No file renamed")
+
 
     def get_string_format(self, list):
         str_format = '{0:<' + str(len(max(list, key=len))) + '} {1}'

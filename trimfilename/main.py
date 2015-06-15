@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
+
+from .utils import PatternLocations
+from .trimfilename import TrimFilename
+
+import argparse
 import os
 import sys
-import argparse
-
-from .trimfilename import TrimFilename
-from .utils import PatternLocations
-
 
 def parse_args():
     parser = argparse.ArgumentParser()

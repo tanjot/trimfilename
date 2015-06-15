@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
-import unittest
-import os
+from trimfilename.utils import rename_file
 
 try:
     import unittest
@@ -12,8 +11,6 @@ except ImportError as e:
     import mock
     from mock import patch
     from mock import call
-
-from trimfilename.utils import rename_file
 
 @patch('os.rename')
 class TestRenameFile(unittest.TestCase):
@@ -28,6 +25,7 @@ class TestRenameFile(unittest.TestCase):
 
         self.assertTrue(output)
 
+
     def test_rename_file_returns_false_if_extension_missing(self, mock_rename):
         mock_rename.return_value=True
         oldname='blaa.txt'
@@ -38,6 +36,7 @@ class TestRenameFile(unittest.TestCase):
 
         self.assertFalse(output)
 
+
     def test_rename_file_returns_false_if_extension_changed(self, mock_rename):
         mock_rename.return_value=True
         oldname='blaa.txt'
@@ -47,6 +46,7 @@ class TestRenameFile(unittest.TestCase):
         output = rename_file(oldname, newname, path)
 
         self.assertFalse(output)
+
 
     def test_rename_file_returns_false_if_newname_starts_with_dot(self, mock_rename):
         mock_rename.return_value=True
@@ -79,6 +79,7 @@ class TestRenameFile(unittest.TestCase):
         output = rename_file(oldname, newname, path)
 
         self.assertFalse(output)
+
 
     def test_rename_file_if_extension_removed(self, mock_rename):
         mock_rename.return_value=True
