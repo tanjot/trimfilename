@@ -2,7 +2,6 @@
 
 import os
 
-
 def main():
     test_folder = 'tmp'
     for file_name in get_file_structure():
