@@ -1,5 +1,7 @@
 # Trim Filename
 
+[![Build Status](https://travis-ci.org/tanjot/trimfilename.svg)](https://travis-ci.org/tanjot/trimfilename)
+
 [![Stories in Ready](https://badge.waffle.io/tanjot/trimfilename.svg?label=ready&title=Ready)](http://waffle.io/tanjot/trimfilename)
 
 A script to trim a specific pattern from filenames.
