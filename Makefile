@@ -9,7 +9,8 @@ VERSION = $(shell cat setup.py | grep version | sed -e "s/version=//" -e "s/'//g
 TEST_FILES = $(wildcard tests/test_*.py)
 TESTS = $(subst .py,,$(subst /,.,$(TEST_FILES)))
 
-all.PHONY: nosetests_3 nosetests_2
+all: nosetests_3 nosetests_2
+.PHONY:all
 
 nosetests_2:
 	@echo "Running $(PYTHON2_EXEC) tests"
