@@ -60,7 +60,7 @@ def main():
 
     for path in argu.folder:
         print("parsing directory: " + path)
-        trimfilename_handle.parseDir(path)
+        trimfilename_handle.trimfilename(path)
 
 if __name__ == '__main__':
     sys.exit(main())

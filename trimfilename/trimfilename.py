@@ -100,6 +100,11 @@ class TrimFilename:
         else:
             print('Path is not valid')
 
+    def trimfilename(self, path):
+        self.parseDir(path)
+        self.printRenamedFiles()
+
+    def printRenamedFiles(self):
         if self.renamed_files_list:
             print('Files renamed: ')
 
