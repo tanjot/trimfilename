@@ -38,6 +38,7 @@ def main():
 
     pattern_location = None
     pattern = None
+    ignore_case = False
 
     if argu.patternInString:
         pattern_location = PatternLocations.patternInString
@@ -49,7 +50,6 @@ def main():
         pattern_location = PatternLocations.patternAtEnd
         pattern = argu.patternAtEnd
 
-    ignore_case = False
     if argu.ignoreCase:
         ignore_case = True
 
