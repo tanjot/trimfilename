@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 
-
 from .utils import PatternLocations
 from .trimfilename import TrimFilename
-
 import argparse
 import os
 import sys
@@ -35,7 +33,6 @@ def parse_args():
 
     return parser.parse_args()
 
-
 def main():
     argu = parse_args()
 
@@ -64,7 +61,6 @@ def main():
     for path in argu.folder:
         print("parsing directory: " + path)
         trimfilename_handle.parseDir(path)
-
 
 if __name__ == '__main__':
     sys.exit(main())

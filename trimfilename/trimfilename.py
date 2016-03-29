@@ -4,7 +4,6 @@ from colorama import Fore
 from colorama import init
 from .utils import PatternLocations
 from .utils import rename_file
-
 import os
 import re
 
@@ -17,12 +16,9 @@ class TrimFilename:
         self.renamed_files_list = {}
         self.ignore_case = ignore_case
 
-
     def add_to_renamed_list(self, old_name, new_name, dir_path):
         old_path = os.path.join(dir_path, old_name)
-
         self.renamed_files_list[old_path] = new_name
-
 
     def remove_default_pattern(self, name, dirPath):
         """ storing name in a list for manipulations on characters individually
@@ -39,12 +35,10 @@ class TrimFilename:
                     del (nameList[nameList.index(char)])
                 else:
                     break
-
             new_name = ''.join(nameList)
 
             if rename_file(name, new_name, dirPath):
                 self.add_to_renamed_list(name, new_name, dirPath)
-
 
     def remove_pattern_at_beg(self, name, dirPath, patternToBeRemoved):
         """ Removes the pattern matched at beginning of the filename
@@ -58,7 +52,6 @@ class TrimFilename:
         if rename_file(name, new_name, dirPath):
             self.add_to_renamed_list(name, new_name, dirPath)
 
-
     def remove_pattern_in_string(self, name, dirPath, patternToBeRemoved):
         """ Checks for pattern in whole string and removes it if match is found
         """
@@ -70,7 +63,6 @@ class TrimFilename:
 
         if rename_file(name, new_name, dirPath):
             self.add_to_renamed_list(name, new_name, dirPath)
-
 
     def remove_pattern_at_end(self, name, dirPath, patternToBeRemoved):
         """ Matches pattern at end of the name
@@ -84,7 +76,6 @@ class TrimFilename:
         if rename_file(name, new_name, dirPath):
             self.add_to_renamed_list(name, new_name, dirPath)
 
-
     def parseDir(self, path):
         ''' Parse the path given for all files and folders contained recursively
         '''
@@ -92,26 +83,20 @@ class TrimFilename:
         # renamedList contains the list of files renamed
         if os.path.exists(path):
             for dirPath, dirs, files in os.walk(path):
-
                 for name in files:
                     if self.pattern_position == PatternLocations.patternInString:
                         self.remove_pattern_in_string(name, dirPath,
                                                       self.pattern)
-
                     elif self.pattern_position == PatternLocations.patternAtBeg:
                         self.remove_pattern_at_beg(name, dirPath, self.pattern)
-
                     elif self.pattern_position == PatternLocations.patternAtEnd:
                         self.remove_pattern_at_end(name, dirPath, self.pattern)
-
                     else:
                         self.remove_default_pattern(name, dirPath)
-
                 # Print all directories in current directory
                 for name in dirs:
                     fold = os.path.join(dirPath, name)
                     print('Folder: ' + fold)
-
         else:
             print('Path is not valid')
 
@@ -123,10 +108,8 @@ class TrimFilename:
                 print(str_format.format(old_path, ': ' + Fore.RED + new_name))
             print('Successfully rename ' + str(len(self.renamed_files_list)) +
                   ' file/s')
-
         else:
             print(Fore.RED + "No file renamed")
-
 
     def get_string_format(self, list):
         str_format = '{0:<' + str(len(max(list, key=len))) + '} {1}'
