@@ -56,11 +56,11 @@ def main():
     trimfilename_handle = TrimFilename(pattern_location, pattern, ignore_case)
 
     if argu.folder is None:
-        argu.folder = [os.getcwd()]
-
-    for path in argu.folder:
-        print("parsing directory: " + path)
-        trimfilename_handle.trimfilename(path)
+        print("Mention atleast one directory name")
+    else:
+        for path in argu.folder:
+            print("parsing directory: " + path)
+            trimfilename_handle.trimfilename(path)
 
 if __name__ == '__main__':
     sys.exit(main())
